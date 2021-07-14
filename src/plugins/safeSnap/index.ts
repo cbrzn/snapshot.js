@@ -107,6 +107,22 @@ const START_BLOCKS = {
   1: 6531147,
   4: 3175028
 };
+
+const NATIVE_TOKENS = {
+  1: {
+    symbol: 'ETH',
+    decimals: 18
+  },
+  4: {
+    symbol: 'ETH',
+    decimals: 18
+  },
+  100: {
+    symbol: 'XDAI',
+    decimals: 18
+  }
+};
+
 export interface ModuleTransaction {
   to: string;
   value: string;
@@ -409,8 +425,8 @@ export default class Plugin {
       [oracleAddress, 'isFinalized', [questionId]]
     ]);
 
-    let tokenSymbol = 'ETH';
-    let tokenDecimals = 18;
+    let tokenSymbol = NATIVE_TOKENS[network].symbol || 'ETH';
+    let tokenDecimals = NATIVE_TOKENS[network].decimals || 18;
 
     try {
       const token = await call(provider, OracleAbi, [
